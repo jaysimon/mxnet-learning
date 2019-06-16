@@ -14,15 +14,15 @@ import random
 
 def create_data(iNum=1000, fW1=2, fW2=-3.4, fB=4.2):
     ndW = nd.array([fW1, fW2])
-    ndX = nd.random.normal(1, shape=[iNum, 2])
+    ndX = nd.random.normal(scale=1, shape=[iNum, 2])
     ndY = nd.dot(ndX, nd.transpose(ndW)) + fB
-    ndY += nd.random.normal(0.01, shape=ndY.shape)
+    ndY += nd.random.normal(scale=0.01, shape=ndY.shape) 
     return ndX, ndY
 
 
 def get_batch(ndX, ndY, iBatchSize):
     iNum = ndX.shape[0]
-    lIndice = range(iNum)
+    lIndice = list(range(iNum))
     random.shuffle(lIndice)
     # print(lIndice)
     for iIndex in range(0, len(lIndice), iBatchSize):
@@ -61,18 +61,21 @@ def train(ndX, ndY):
                 fLoss = loss(ndPredY, ndBatchY)
             fLoss.backward()
             backward([ndW, ndB], fLR=fLR, iBatchSize=iBatchSize)
+        # print("params:{}".format([ndW, ndB]))
         train_l = loss(forward(ndX, ndW, ndB), ndY)
-        print(train_l.shape)
-        print("[Log] Epoch:%d Loss is %f\n" % (iIndex, (train_l.mean().asnumpy())))
+        # print(train_l.shape)
+        print(
+            "[Log] Epoch:%d Loss is %f\n" %
+            (iIndex+1, (train_l.mean().asnumpy())))
     print(ndW)
     print(ndB)
 
 
 def main():
     ndX, ndY = create_data(iNum=1000, fW1=2, fW2=-3.4, fB=4.2)
-    # ndA = nd.array([1.5, 2.4])
-    # ndB = nd.array([1, 5.1])
-    # print(loss(ndA, ndB))
+    ndA = nd.array([1.5, 2.4])
+    ndB = nd.array([1, 5.1])
+    print(loss(ndA, ndB))
     train(ndX, ndY)
 
 
