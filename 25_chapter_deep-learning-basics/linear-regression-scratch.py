@@ -12,7 +12,7 @@ from mxnet import autograd, nd
 import random
 
 
-def create_data(iNum=1000, fW1=2, fW2=-3.4, fB=4.2):
+def create_data(iNum=1000, fW1=12.2525, fW2=-7.2153, fB=10.232):
     ndW = nd.array([fW1, fW2])
     ndX = nd.random.normal(scale=1, shape=[iNum, 2])
     ndY = nd.dot(ndX, nd.transpose(ndW)) + fB
@@ -72,7 +72,7 @@ def train(ndX, ndY):
 
 
 def main():
-    ndX, ndY = create_data(iNum=1000, fW1=2, fW2=-3.4, fB=4.2)
+    ndX, ndY = create_data(iNum=1000, fW1=12.2525, fW2=-7.2153, fB=10.232)
     ndA = nd.array([1.5, 2.4])
     ndB = nd.array([1, 5.1])
     print(loss(ndA, ndB))
